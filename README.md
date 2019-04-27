@@ -1,6 +1,6 @@
-# first_solo_attempt
+# Flutter Memroids
 
-A new Flutter project.
+Rebuilding Memroids using Dart/Flutter
 
 ## Getting Started
 
