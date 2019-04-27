@@ -11,15 +11,17 @@ class MemoryView extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: Text(mem.name),
+        actions: <Widget>[
+          IconButton(
+            icon: Icon(Icons.backspace),
+            onPressed: () {
+              Navigator.pop(context);
+            },
+          )
+        ],
       ),
       body: Center(
         child: mem.image,
-      ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: (){
-          Navigator.pop(context);
-        },
-        child: Icon(Icons.backspace),
       ),
     );
   }
