@@ -13,7 +13,7 @@ class MemoryView extends StatelessWidget {
         title: Text(mem.name),
         actions: <Widget>[
           IconButton(
-            icon: Icon(Icons.backspace),
+            icon: Icon(Icons.check),
             onPressed: () {
               Navigator.pop(context);
             },

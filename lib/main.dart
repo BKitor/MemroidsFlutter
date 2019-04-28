@@ -8,15 +8,14 @@ main() => runApp(MyApp());
 class MyApp extends StatelessWidget {
   final List<Memory> memories = [];
 
- 
-
   @override
   Widget build(BuildContext context) {
     memories.add(
         Memory("Test1", DateTime.now(), Image.asset("assets/DioPearl.png")));
     memories.add(
         Memory("Test2", DateTime.now(), Image.asset("assets/DioAzura.png")));
-    memories.add(Memory("Test3", DateTime.now(), Image.asset("assets/PickleDio.png")));
+    memories.add(
+        Memory("Test3", DateTime.now(), Image.asset("assets/PickleDio.png")));
 
     return MaterialApp(
       home: MainMemoryList(memories),
