@@ -15,7 +15,7 @@ class MemoryView extends StatelessWidget {
           IconButton(
             icon: Icon(Icons.check),
             onPressed: () {
-              Navigator.pop(context);
+              Navigator.pop(context, mem);
             },
           )
         ],

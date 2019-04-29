@@ -10,7 +10,6 @@ class MainMemoryList extends StatefulWidget {
 
   @override
   State<StatefulWidget> createState() {
-    // TODO: implement createState
     return _MainMemoryListState(memories);
   }
 }
@@ -25,20 +24,7 @@ class _MainMemoryListState extends State<MainMemoryList> {
       appBar: AppBar(
         title: Text("Memroids"),
       ),
-      body: ListView.builder(
-        itemCount: memories.length,
-        itemBuilder: (context, index) {
-          return FlatButton(
-            onPressed: () {
-              Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                      builder: (context) => MemoryView(memories[index])));
-            },
-            child: Text(memories[index].name),
-          );
-        },
-      ),
+      body: _buildMemoryList(),
       floatingActionButton: FloatingActionButton(
         onPressed: onNewMemPressed,
         child: Icon(Icons.add),
@@ -46,8 +32,40 @@ class _MainMemoryListState extends State<MainMemoryList> {
     );
   }
 
-  void onNewMemPressed(){
-    Future<Memory> newMem = Navigator.pushNamed<Memory>(context, '/newMem');
+  Widget _buildMemoryList() {
+    return ListView.builder(
+      padding: const EdgeInsets.all(16),
+      itemBuilder: (BuildContext _context, int i) {
+        if (i.isOdd) {
+          return Divider();
+        }
+        final int index = i ~/ 2;
+        return _buildMemoryRow(memories[index]);
+      },
+      itemCount: memories.length*2,
+    );
   }
 
+  Widget _buildMemoryRow(Memory mem) {
+    return ListTile(
+      title: Text(mem.name),
+      onTap: () {
+        Navigator.push<Memory>(context,
+                MaterialPageRoute(builder: (context) => MemoryView(mem)))
+            .then((Memory modifiedMem) {
+          setState(() {
+            if (modifiedMem != null) {
+              mem = modifiedMem;
+            }else{
+              memories.remove(mem);
+            }
+          });
+        });
+      },
+    );
+  }
+
+  void onNewMemPressed() {
+    Future<Memory> newMem = Navigator.pushNamed<Memory>(context, '/newMem');
+  }
 }
