@@ -66,6 +66,14 @@ class _MainMemoryListState extends State<MainMemoryList> {
   }
 
   void onNewMemPressed() {
-    Future<Memory> newMem = Navigator.pushNamed<Memory>(context, '/newMem');
+    Navigator.push<Memory>(context,MaterialPageRoute(builder: (context)=>MemoryView(
+              Memory("NewMem", DateTime.now(), Image.asset("assets/DioPearl.png")))
+    )).then((Memory newMem){
+      setState(() {
+        if(newMem != null){
+          memories.add(newMem);
+        }
+      });
+    });
   }
 }
