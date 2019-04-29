@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'dart:async';
 
 import './memory.dart';
 import './memory_view.dart';
@@ -39,9 +40,14 @@ class _MainMemoryListState extends State<MainMemoryList> {
         },
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: () {},
+        onPressed: onNewMemPressed,
         child: Icon(Icons.add),
       ),
     );
   }
+
+  void onNewMemPressed(){
+    Future<Memory> newMem = Navigator.pushNamed<Memory>(context, '/newMem');
+  }
+
 }
