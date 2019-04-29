@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import './memory.dart';
 import './main_memory_list.dart';
+import './new_memory.dart';
 
 main() => runApp(MyApp());
 
@@ -19,6 +20,9 @@ class MyApp extends StatelessWidget {
 
     return MaterialApp(
       home: MainMemoryList(memories),
+      routes: <String, WidgetBuilder> {
+        '/newMem': (BuildContext context)=>NewMem()
+      },
     );
   }
 }
