@@ -16,6 +16,7 @@ class MainMemoryList extends StatefulWidget {
 
 class _MainMemoryListState extends State<MainMemoryList> {
   final List<Memory> memories;
+  bool deleting = false;
   _MainMemoryListState(this.memories);
 
   @override
@@ -23,11 +24,14 @@ class _MainMemoryListState extends State<MainMemoryList> {
     return Scaffold(
       appBar: AppBar(
         title: Text("Memroids"),
+        actions: <Widget>[
+          _deletingButtonWidget(),
+        ],
       ),
       body: _buildMemoryList(),
       floatingActionButton: FloatingActionButton(
         onPressed: onNewMemPressed,
-        child: Icon(Icons.add),
+        child: Icon(Icons.create),
       ),
     );
   }
@@ -42,35 +46,59 @@ class _MainMemoryListState extends State<MainMemoryList> {
         final int index = i ~/ 2;
         return _buildMemoryRow(memories[index]);
       },
-      itemCount: memories.length*2,
+      itemCount: memories.length * 2,
     );
   }
 
   Widget _buildMemoryRow(Memory mem) {
     return ListTile(
       title: Text(mem.name),
-      onTap: () {
-        Navigator.push<Memory>(context,
-                MaterialPageRoute(builder: (context) => MemoryView(mem)))
-            .then((Memory modifiedMem) {
-          setState(() {
-            if (modifiedMem != null) {
-              mem = modifiedMem;
-            }else{
-              memories.remove(mem);
+      onTap: deleting
+          ? () {
+              setState(() {
+                memories.remove(mem);
+              });
             }
-          });
+          : () {
+              Navigator.push<Memory>(context,
+                      MaterialPageRoute(builder: (context) => MemoryView(mem)))
+                  .then((Memory modifiedMem) {
+                setState(() {
+                  if (modifiedMem != null) {
+                    mem = modifiedMem;
+                  } 
+                });
+              });
+            },
+    );
+  }
+
+  void onMemPressedView() {}
+
+  void onMemPressedDel() {}
+
+  Widget _deletingButtonWidget() {
+    return IconButton(
+      icon: Icon(
+        Icons.remove,
+        color: deleting ? Colors.red : Colors.white,
+      ),
+      onPressed: () {
+        setState(() {
+          deleting = !deleting;
         });
       },
     );
   }
 
   void onNewMemPressed() {
-    Navigator.push<Memory>(context,MaterialPageRoute(builder: (context)=>MemoryView(
-              Memory("NewMem", DateTime.now(), Image.asset("assets/DioPearl.png")))
-    )).then((Memory newMem){
+    Navigator.push<Memory>(
+        context,
+        MaterialPageRoute(
+            builder: (context) => MemoryView(Memory("NewMem", DateTime.now(),
+                Image.asset("assets/DioPearl.png"))))).then((Memory newMem) {
       setState(() {
-        if(newMem != null){
+        if (newMem != null) {
           memories.add(newMem);
         }
       });
