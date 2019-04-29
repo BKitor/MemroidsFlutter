@@ -66,15 +66,16 @@ class _MainMemoryListState extends State<MainMemoryList> {
                           "Are you sure you want to delete this memory? It's ireversable."),
                       actions: <Widget>[
                         FlatButton(
-                          child: Text("Cancle"),
-                          onPressed: () {
-                            Navigator.pop(context, false);
-                          },
-                        ),
-                        FlatButton(
                           child: Text("Confirm"),
                           onPressed: () {
                             Navigator.pop(context, true);
+                          },
+                        ),
+                        FlatButton(
+                          child: Text("Cancle"),
+                          textColor: Colors.red,
+                          onPressed: () {
+                            Navigator.pop(context, false);
                           },
                         )
                       ],
