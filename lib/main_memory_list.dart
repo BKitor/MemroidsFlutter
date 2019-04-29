@@ -52,11 +52,39 @@ class _MainMemoryListState extends State<MainMemoryList> {
 
   Widget _buildMemoryRow(Memory mem) {
     return ListTile(
-      title: Text(mem.name),
+      title: Text(
+        mem.name,
+      ),
       onTap: deleting
           ? () {
-              setState(() {
-                memories.remove(mem);
+              showDialog<bool>(
+                context: context,
+                barrierDismissible: false,
+                builder: (context) => AlertDialog(
+                      title: Text("Delete ${mem.name}"),
+                      content: Text(
+                          "Are you sure you want to delete this memory? It's ireversable."),
+                      actions: <Widget>[
+                        FlatButton(
+                          child: Text("Cancle"),
+                          onPressed: () {
+                            Navigator.pop(context, false);
+                          },
+                        ),
+                        FlatButton(
+                          child: Text("Confirm"),
+                          onPressed: () {
+                            Navigator.pop(context, true);
+                          },
+                        )
+                      ],
+                    ),
+              ).then((del) {
+                setState(() {
+                  if (del) {
+                    memories.remove(mem);
+                  }
+                });
               });
             }
           : () {
@@ -66,16 +94,12 @@ class _MainMemoryListState extends State<MainMemoryList> {
                 setState(() {
                   if (modifiedMem != null) {
                     mem = modifiedMem;
-                  } 
+                  }
                 });
               });
             },
     );
   }
-
-  void onMemPressedView() {}
-
-  void onMemPressedDel() {}
 
   Widget _deletingButtonWidget() {
     return IconButton(
