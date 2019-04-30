@@ -14,7 +14,6 @@ class NewMem extends StatefulWidget {
 class _NewMemState extends State<NewMem> {
   @override
   Widget build(BuildContext context) {
-    // TODO: implement build
     return MemoryView(Memory(
         "New memory", DateTime.now(), Image.asset('assets/DioPearl.png')));
   }
