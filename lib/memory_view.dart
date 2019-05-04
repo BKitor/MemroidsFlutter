@@ -2,10 +2,21 @@ import 'package:flutter/material.dart';
 import "package:intl/intl.dart";
 
 import './memory.dart';
+import './memory_editer.dart';
 
-class MemoryView extends StatelessWidget {
+class MemoryView extends StatefulWidget {
   final Memory mem;
   MemoryView(this.mem);
+
+  @override
+  State<StatefulWidget> createState() {
+    return _MemoryViewState(mem);
+  }
+}
+
+class _MemoryViewState extends State<MemoryView> {
+  final Memory mem;
+  _MemoryViewState(this.mem);
 
   @override
   Widget build(BuildContext context) {
@@ -14,11 +25,23 @@ class MemoryView extends StatelessWidget {
         title: Text(mem.name),
         actions: <Widget>[
           IconButton(
+            icon: Icon(Icons.edit),
+            onPressed: () {
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => MemoryEditor(mem),
+                  )).then((value) {
+                setState(() {});
+              });
+            },
+          ),
+          IconButton(
             icon: Icon(Icons.check),
             onPressed: () {
               Navigator.pop(context, mem);
             },
-          )
+          ),
         ],
       ),
       body: Column(
@@ -41,9 +64,6 @@ class MemoryView extends StatelessWidget {
   }
 
   TextStyle _remeinderDateStyle() {
-    return TextStyle(
-      fontSize: 20
-    );
+    return TextStyle(fontSize: 20);
   }
-
 }
